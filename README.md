@@ -1,6 +1,7 @@
 ![waylandcraft banner](/assets/title_scaled.png)
 
 Wayland Compositor in Minecraft
+`This fork is by Mahancreate and ports this mod to 26.3`
 
 [Demo video](https://youtu.be/cTkEM7b0IQw)
 
