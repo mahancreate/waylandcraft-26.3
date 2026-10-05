@@ -1,0 +1,459 @@
+
+> Configure project :
+Fabric Loom: 1.17.21
+WARNING: Native library not built! The built mod will not contain native code
+
+> Task :clean
+
+> Task :compileJava FAILED
+/home/mahan/waylandcraft/src/main/java/dev/evvie/waylandcraft/render/WindowFramebuffer.java:41: error: cannot find symbol
+import net.minecraft.client.renderer.DynamicUniformStorage;
+                                    ^
+  symbol:   class DynamicUniformStorage
+  location: package net.minecraft.client.renderer
+/home/mahan/waylandcraft/src/main/java/dev/evvie/waylandcraft/render/WindowFramebuffer.java:42: error: package net.minecraft.client.renderer.DynamicUniformStorage does not exist
+import net.minecraft.client.renderer.DynamicUniformStorage.DynamicUniform;
+                                                          ^
+/home/mahan/waylandcraft/src/main/java/dev/evvie/waylandcraft/render/WindowFramebuffer.java:95: error: cannot find symbol
+	private static DynamicUniformStorage<WindowInfoUniform> uniformStorage = null;
+	               ^
+  symbol:   class DynamicUniformStorage
+  location: class WindowFramebuffer
+/home/mahan/waylandcraft/src/main/java/dev/evvie/waylandcraft/render/WindowFramebuffer.java:364: error: cannot find symbol
+	private static record WindowInfoUniform(Matrix4fc mat, boolean alpha) implements DynamicUniform {
+	                                                                                 ^
+  symbol:   class DynamicUniform
+  location: class WindowFramebuffer
+/home/mahan/waylandcraft/src/main/java/dev/evvie/waylandcraft/mixin/IItemInHandRendererMixin.java:8: error: cannot find symbol
+import net.minecraft.client.renderer.ItemInHandRenderer;
+                                    ^
+  symbol:   class ItemInHandRenderer
+  location: package net.minecraft.client.renderer
+/home/mahan/waylandcraft/src/main/java/dev/evvie/waylandcraft/mixin/ItemInHandRendererMixin.java:15: error: cannot find symbol
+import net.minecraft.client.renderer.ItemInHandRenderer;
+                                    ^
+  symbol:   class ItemInHandRenderer
+  location: package net.minecraft.client.renderer
+/home/mahan/waylandcraft/src/main/java/dev/evvie/waylandcraft/mixin/IItemInHandRendererMixin.java:12: error: cannot find symbol
+@Mixin(ItemInHandRenderer.class)
+       ^
+  symbol: class ItemInHandRenderer
+/home/mahan/waylandcraft/src/main/java/dev/evvie/waylandcraft/mixin/ItemInHandRendererMixin.java:21: error: cannot find symbol
+@Mixin(ItemInHandRenderer.class)
+       ^
+  symbol: class ItemInHandRenderer
+/home/mahan/waylandcraft/src/main/java/dev/evvie/waylandcraft/mixin/KeyboardHandlerMixin.java:22: error: cannot find symbol
+		if(Minecraft.getInstance().screen != null) return;
+		                          ^
+  symbol:   variable screen
+  location: class Minecraft
+/home/mahan/waylandcraft/src/main/java/dev/evvie/waylandcraft/render/BufferTexture.java:84: error: incompatible types: int cannot be converted to Vector4fc
+			RenderSystem.getDevice().createCommandEncoder().clearColorTexture(texture, color);
+			                                                                           ^
+/home/mahan/waylandcraft/src/main/java/dev/evvie/waylandcraft/render/BufferTexture.java:182: error: constructor TextureTarget in class TextureTarget cannot be applied to given types;
+			target = new TextureTarget("dmabuf-target-" + this.hashCode(), width, height, false);
+			         ^
+  required: String,int,int,GpuFormat,GpuFormat
+  found:    String,int,int,boolean
+  reason: actual and formal argument lists differ in length
+/home/mahan/waylandcraft/src/main/java/dev/evvie/waylandcraft/render/BufferTexture.java:197: error: incompatible types: OptionalInt cannot be converted to Optional<Vector4fc>
+			try (RenderPass renderPass = RenderSystem.getDevice().createCommandEncoder().createRenderPass(() -> "Dmabuf blit", target.getColorTextureView(), OptionalInt.of(0x00000000))) {
+			                                                                                                                                                               ^
+/home/mahan/waylandcraft/src/main/java/dev/evvie/waylandcraft/render/WindowFramebuffer.java:89: error: cannot find symbol
+		.withUniform("WindowInfo", UniformType.UNIFORM_BUFFER)
+		^
+  symbol:   method withUniform(String,UniformType)
+  location: class Builder
+/home/mahan/waylandcraft/src/main/java/dev/evvie/waylandcraft/render/WindowFramebuffer.java:119: error: cannot find symbol
+			uniformStorage = new DynamicUniformStorage<WindowInfoUniform>("window framebuffer", WindowInfoUniform.SIZE, 2);
+			                     ^
+  symbol:   class DynamicUniformStorage
+  location: class WindowFramebuffer
+/home/mahan/waylandcraft/src/main/java/dev/evvie/waylandcraft/render/WindowFramebuffer.java:157: error: constructor TextureTarget in class TextureTarget cannot be applied to given types;
+			tempTarget = new TextureTarget(name() + "-temp", width, height, false);
+			             ^
+  required: String,int,int,GpuFormat,GpuFormat
+  found:    String,int,int,boolean
+  reason: actual and formal argument lists differ in length
+/home/mahan/waylandcraft/src/main/java/dev/evvie/waylandcraft/render/WindowFramebuffer.java:161: error: constructor TextureTarget in class TextureTarget cannot be applied to given types;
+			target = new TextureTarget(name(), width, height, false);
+			         ^
+  required: String,int,int,GpuFormat,GpuFormat
+  found:    String,int,int,boolean
+  reason: actual and formal argument lists differ in length
+/home/mahan/waylandcraft/src/main/java/dev/evvie/waylandcraft/render/WindowFramebuffer.java:190: error: incompatible types: OptionalInt cannot be converted to Optional<Vector4fc>
+			try(RenderPass pass = RenderSystem.getDevice().createCommandEncoder().createRenderPass(() -> "window framebuffer", tempTarget.getColorTextureView(), OptionalInt.of(0x00000000))) {
+			                                                                                                                                                                   ^
+/home/mahan/waylandcraft/src/main/java/dev/evvie/waylandcraft/render/WindowFramebuffer.java:209: error: incompatible types: OptionalInt cannot be converted to Optional<Vector4fc>
+		try(RenderPass pass = RenderSystem.getDevice().createCommandEncoder().createRenderPass(() -> "window framebuffer unpremultiply", target.getColorTextureView(), OptionalInt.empty())) {
+		                                                                                                                                                                                ^
+/home/mahan/waylandcraft/src/main/java/dev/evvie/waylandcraft/render/WindowFramebuffer.java:228: error: incompatible types: OptionalInt cannot be converted to Optional<Vector4fc>
+			try(RenderPass pass = RenderSystem.getDevice().createCommandEncoder().createRenderPass(() -> "window framebuffer damage", tempTarget.getColorTextureView(), OptionalInt.empty())) {
+			                                                                                                                                                                             ^
+/home/mahan/waylandcraft/src/main/java/dev/evvie/waylandcraft/render/WindowFramebuffer.java:368: error: method does not override or implement a method from a supertype
+		@Override
+		^
+/home/mahan/waylandcraft/src/main/java/dev/evvie/waylandcraft/displays/WindowDisplay.java:147: error: method isKeyDown in class InputConstants cannot be applied to given types;
+		boolean modDown = InputConstants.isKeyDown(Minecraft.getInstance().getWindow(), GLFW.GLFW_KEY_LEFT_ALT);
+		                                ^
+  required: int
+  found:    Window,int
+  reason: actual and formal argument lists differ in length
+/home/mahan/waylandcraft/src/main/java/dev/evvie/waylandcraft/displays/WindowDisplay.java:148: error: method isKeyDown in class InputConstants cannot be applied to given types;
+		boolean ctrlDown = InputConstants.isKeyDown(Minecraft.getInstance().getWindow(), GLFW.GLFW_KEY_LEFT_CONTROL);
+		                                 ^
+  required: int
+  found:    Window,int
+  reason: actual and formal argument lists differ in length
+/home/mahan/waylandcraft/src/main/java/dev/evvie/waylandcraft/WaylandCraft.java:158: error: cannot find symbol
+			bridge = WaylandCraftBridge.start();
+			                           ^
+  symbol:   method start()
+  location: class WaylandCraftBridge
+/home/mahan/waylandcraft/src/main/java/dev/evvie/waylandcraft/WaylandCraft.java:244: error: cannot find symbol
+		boolean inWMScreen = Minecraft.getInstance().screen instanceof WindowManagerScreen;
+		                                            ^
+  symbol:   variable screen
+  location: class Minecraft
+/home/mahan/waylandcraft/src/main/java/dev/evvie/waylandcraft/WaylandCraft.java:293: error: cannot find symbol
+		minecraft.getChatListener().handleSystemMessage(Component.literal("Wayland compositor running on " + waylandSocket), false);
+		         ^
+  symbol:   method getChatListener()
+  location: variable minecraft of type Minecraft
+/home/mahan/waylandcraft/src/main/java/dev/evvie/waylandcraft/WaylandCraft.java:294: error: cannot find symbol
+		if(x11Display != null) minecraft.getChatListener().handleSystemMessage(Component.literal("xwayland-satellite running on " + x11Display), false);
+		                                ^
+  symbol:   method getChatListener()
+  location: variable minecraft of type Minecraft
+/home/mahan/waylandcraft/src/main/java/dev/evvie/waylandcraft/WaylandCraft.java:455: error: cannot find symbol
+		if(Minecraft.getInstance().getOverlay() instanceof PointerCaptureOverlay overlay) {
+		                          ^
+  symbol:   method getOverlay()
+  location: class Minecraft
+/home/mahan/waylandcraft/src/main/java/dev/evvie/waylandcraft/WaylandCraft.java:457: error: cannot find symbol
+			Minecraft.getInstance().setOverlay(null);
+			                       ^
+  symbol:   method setOverlay(<null>)
+  location: class Minecraft
+/home/mahan/waylandcraft/src/main/java/dev/evvie/waylandcraft/WaylandCraft.java:497: error: cannot find symbol
+		if(Minecraft.getInstance().screen instanceof WindowManagerScreen) {
+		                          ^
+  symbol:   variable screen
+  location: class Minecraft
+/home/mahan/waylandcraft/src/main/java/dev/evvie/waylandcraft/WaylandCraft.java:500: error: cannot find symbol
+		else if(Minecraft.getInstance().screen != null) {
+		                               ^
+  symbol:   variable screen
+  location: class Minecraft
+/home/mahan/waylandcraft/src/main/java/dev/evvie/waylandcraft/WaylandCraft.java:798: error: cannot find symbol
+			if(Minecraft.getInstance().getOverlay() == null) Minecraft.getInstance().setOverlay(new PointerCaptureOverlay());
+			                          ^
+  symbol:   method getOverlay()
+  location: class Minecraft
+/home/mahan/waylandcraft/src/main/java/dev/evvie/waylandcraft/WaylandCraft.java:798: error: cannot find symbol
+			if(Minecraft.getInstance().getOverlay() == null) Minecraft.getInstance().setOverlay(new PointerCaptureOverlay());
+			                                                                        ^
+  symbol:   method setOverlay(WaylandCraft.PointerCaptureOverlay)
+  location: class Minecraft
+/home/mahan/waylandcraft/src/main/java/dev/evvie/waylandcraft/WaylandCraft.java:847: error: method does not override or implement a method from a supertype
+		@Override
+		^
+/home/mahan/waylandcraft/src/main/java/dev/evvie/waylandcraft/mixin/MouseHandlerMixin.java:28: error: cannot find symbol
+		if(Minecraft.getInstance().getOverlay() instanceof PointerCaptureOverlay && WaylandCraft.instance.pointerCapture != null) {
+		                          ^
+  symbol:   method getOverlay()
+  location: class Minecraft
+/home/mahan/waylandcraft/src/main/java/dev/evvie/waylandcraft/mixin/MouseHandlerMixin.java:40: error: cannot find symbol
+		if(Minecraft.getInstance().getOverlay() instanceof PointerCaptureOverlay && WaylandCraft.instance.pointerCapture != null) {
+		                          ^
+  symbol:   method getOverlay()
+  location: class Minecraft
+/home/mahan/waylandcraft/src/main/java/dev/evvie/waylandcraft/render/WindowInHandRenderer.java:27: error: no suitable method found for mulPose(Quaternionf)
+			poseStack.mulPose(Axis.ZP.rotationDegrees(h * 10.0f));
+			         ^
+    method PoseStack.mulPose(Matrix4fc) is not applicable
+      (argument mismatch; Quaternionf cannot be converted to Matrix4fc)
+    method PoseStack.mulPose(Transformation) is not applicable
+      (argument mismatch; Quaternionf cannot be converted to Transformation)
+/home/mahan/waylandcraft/src/main/java/dev/evvie/waylandcraft/render/WindowInHandRenderer.java:40: error: no suitable method found for mulPose(Quaternionf)
+		poseStack.mulPose(Axis.XP.rotationDegrees(osci * -45.0f));
+		         ^
+    method PoseStack.mulPose(Matrix4fc) is not applicable
+      (argument mismatch; Quaternionf cannot be converted to Matrix4fc)
+    method PoseStack.mulPose(Transformation) is not applicable
+      (argument mismatch; Quaternionf cannot be converted to Transformation)
+/home/mahan/waylandcraft/src/main/java/dev/evvie/waylandcraft/render/WindowInHandRenderer.java:41: error: no suitable method found for mulPose(Quaternionf)
+		poseStack.mulPose(Axis.YP.rotationDegrees(h * osci * -30.0f));
+		         ^
+    method PoseStack.mulPose(Matrix4fc) is not applicable
+      (argument mismatch; Quaternionf cannot be converted to Matrix4fc)
+    method PoseStack.mulPose(Transformation) is not applicable
+      (argument mismatch; Quaternionf cannot be converted to Transformation)
+/home/mahan/waylandcraft/src/main/java/dev/evvie/waylandcraft/render/WindowInHandRenderer.java:98: error: cannot find symbol
+		((IItemInHandRendererMixin) Minecraft.getInstance().getEntityRenderDispatcher().getItemInHandRenderer()).invokeRenderPlayerArm(poseStack, collector, light, handHeight, attack, humanoidArm);
+		                                                                               ^
+  symbol:   method getItemInHandRenderer()
+  location: class EntityRenderDispatcher
+/home/mahan/waylandcraft/src/main/java/dev/evvie/waylandcraft/render/WindowTranslucencyHotfix.java:27: error: no suitable constructor found for ColorTargetState(Optional<Object>,int)
+			.withColorTargetState(new ColorTargetState(Optional.empty(), ColorTargetState.WRITE_ALPHA))
+			                      ^
+    constructor ColorTargetState.ColorTargetState(BlendFunction) is not applicable
+      (actual and formal argument lists differ in length)
+    constructor ColorTargetState.ColorTargetState(Optional<BlendFunction>,GpuFormat,int) is not applicable
+      (actual and formal argument lists differ in length)
+/home/mahan/waylandcraft/src/main/java/dev/evvie/waylandcraft/render/WindowTranslucencyHotfix.java:40: error: incompatible types: OptionalInt cannot be converted to Optional<Vector4fc>
+		try(RenderPass pass = RenderSystem.getDevice().createCommandEncoder().createRenderPass(() -> "translucency_hotfix", Minecraft.getInstance().gameRenderer.mainRenderTarget().getColorTextureView(), clearColor)) {
+		                                                                                                                                                                                                   ^
+/home/mahan/waylandcraft/src/main/java/dev/evvie/waylandcraft/render/RenderUtils.java:43: error: cannot find symbol
+	private static final RenderPipeline.Snippet WINDOW_PIPELINE_SNIPPET = RenderPipeline.builder(RenderPipelines.MATRICES_PROJECTION_SNIPPET)
+	                                                                                                            ^
+  symbol:   variable MATRICES_PROJECTION_SNIPPET
+  location: class RenderPipelines
+/home/mahan/waylandcraft/src/main/java/dev/evvie/waylandcraft/grabs/MoveGrab.java:53: error: method isKeyDown in class InputConstants cannot be applied to given types;
+		snapActive = InputConstants.isKeyDown(Minecraft.getInstance().getWindow(), GLFW.GLFW_KEY_LEFT_CONTROL);
+		                           ^
+  required: int
+  found:    Window,int
+  reason: actual and formal argument lists differ in length
+/home/mahan/waylandcraft/src/main/java/dev/evvie/waylandcraft/gui/SettingsWidget.java:339: error: cannot find symbol
+			int digit = event.getDigit();
+			                 ^
+  symbol:   method getDigit()
+  location: variable event of type KeyEvent
+Note: /home/mahan/waylandcraft/src/main/java/dev/evvie/waylandcraft/WaylandCraft.java uses or overrides a deprecated API.
+Note: Recompile with -Xlint:deprecation for details.
+Note: Some messages have been simplified; recompile with -Xdiags:verbose to get full output
+44 errors
+
+[Incubating] Problems report is available at: file:///home/mahan/waylandcraft/build/reports/problems/problems-report.html
+
+FAILURE: Build failed with an exception.
+
+* What went wrong:
+Execution failed for task ':compileJava' (registered by plugin class 'org.gradle.api.plugins.JavaBasePlugin').
+> Compilation failed; see the compiler output below.
+  Note: /home/mahan/waylandcraft/src/main/java/dev/evvie/waylandcraft/WaylandCraft.java uses or overrides a deprecated API.
+  /home/mahan/waylandcraft/src/main/java/dev/evvie/waylandcraft/render/BufferTexture.java:182: error: constructor TextureTarget in class TextureTarget cannot be applied to given types;
+  			target = new TextureTarget("dmabuf-target-" + this.hashCode(), width, height, false);
+  			         ^
+    required: String,int,int,GpuFormat,GpuFormat
+    found:    String,int,int,boolean
+    reason: actual and formal argument lists differ in length
+  /home/mahan/waylandcraft/src/main/java/dev/evvie/waylandcraft/render/WindowFramebuffer.java:157: error: constructor TextureTarget in class TextureTarget cannot be applied to given types;
+  			tempTarget = new TextureTarget(name() + "-temp", width, height, false);
+  			             ^
+    required: String,int,int,GpuFormat,GpuFormat
+    found:    String,int,int,boolean
+    reason: actual and formal argument lists differ in length
+  /home/mahan/waylandcraft/src/main/java/dev/evvie/waylandcraft/render/WindowFramebuffer.java:161: error: constructor TextureTarget in class TextureTarget cannot be applied to given types;
+  			target = new TextureTarget(name(), width, height, false);
+  			         ^
+    required: String,int,int,GpuFormat,GpuFormat
+    found:    String,int,int,boolean
+    reason: actual and formal argument lists differ in length
+  /home/mahan/waylandcraft/src/main/java/dev/evvie/waylandcraft/displays/WindowDisplay.java:147: error: method isKeyDown in class InputConstants cannot be applied to given types;
+  		boolean modDown = InputConstants.isKeyDown(Minecraft.getInstance().getWindow(), GLFW.GLFW_KEY_LEFT_ALT);
+  		                                ^
+    required: int
+    found:    Window,int
+    reason: actual and formal argument lists differ in length
+  /home/mahan/waylandcraft/src/main/java/dev/evvie/waylandcraft/displays/WindowDisplay.java:148: error: method isKeyDown in class InputConstants cannot be applied to given types;
+  		boolean ctrlDown = InputConstants.isKeyDown(Minecraft.getInstance().getWindow(), GLFW.GLFW_KEY_LEFT_CONTROL);
+  		                                 ^
+    required: int
+    found:    Window,int
+    reason: actual and formal argument lists differ in length
+  /home/mahan/waylandcraft/src/main/java/dev/evvie/waylandcraft/grabs/MoveGrab.java:53: error: method isKeyDown in class InputConstants cannot be applied to given types;
+  		snapActive = InputConstants.isKeyDown(Minecraft.getInstance().getWindow(), GLFW.GLFW_KEY_LEFT_CONTROL);
+  		                           ^
+    required: int
+    found:    Window,int
+    reason: actual and formal argument lists differ in length
+  /home/mahan/waylandcraft/src/main/java/dev/evvie/waylandcraft/render/WindowInHandRenderer.java:27: error: no suitable method found for mulPose(Quaternionf)
+  			poseStack.mulPose(Axis.ZP.rotationDegrees(h * 10.0f));
+  			         ^
+      method PoseStack.mulPose(Matrix4fc) is not applicable
+        (argument mismatch; Quaternionf cannot be converted to Matrix4fc)
+      method PoseStack.mulPose(Transformation) is not applicable
+        (argument mismatch; Quaternionf cannot be converted to Transformation)
+  /home/mahan/waylandcraft/src/main/java/dev/evvie/waylandcraft/render/WindowInHandRenderer.java:40: error: no suitable method found for mulPose(Quaternionf)
+  		poseStack.mulPose(Axis.XP.rotationDegrees(osci * -45.0f));
+  		         ^
+      method PoseStack.mulPose(Matrix4fc) is not applicable
+        (argument mismatch; Quaternionf cannot be converted to Matrix4fc)
+      method PoseStack.mulPose(Transformation) is not applicable
+        (argument mismatch; Quaternionf cannot be converted to Transformation)
+  /home/mahan/waylandcraft/src/main/java/dev/evvie/waylandcraft/render/WindowInHandRenderer.java:41: error: no suitable method found for mulPose(Quaternionf)
+  		poseStack.mulPose(Axis.YP.rotationDegrees(h * osci * -30.0f));
+  		         ^
+      method PoseStack.mulPose(Matrix4fc) is not applicable
+        (argument mismatch; Quaternionf cannot be converted to Matrix4fc)
+      method PoseStack.mulPose(Transformation) is not applicable
+        (argument mismatch; Quaternionf cannot be converted to Transformation)
+  /home/mahan/waylandcraft/src/main/java/dev/evvie/waylandcraft/render/WindowTranslucencyHotfix.java:27: error: no suitable constructor found for ColorTargetState(Optional<Object>,int)
+  			.withColorTargetState(new ColorTargetState(Optional.empty(), ColorTargetState.WRITE_ALPHA))
+  			                      ^
+      constructor ColorTargetState.ColorTargetState(BlendFunction) is not applicable
+        (actual and formal argument lists differ in length)
+      constructor ColorTargetState.ColorTargetState(Optional<BlendFunction>,GpuFormat,int) is not applicable
+        (actual and formal argument lists differ in length)
+  Note: Recompile with -Xlint:deprecation for details.
+  /home/mahan/waylandcraft/src/main/java/dev/evvie/waylandcraft/render/BufferTexture.java:84: error: incompatible types: int cannot be converted to Vector4fc
+  			RenderSystem.getDevice().createCommandEncoder().clearColorTexture(texture, color);
+  			                                                                           ^
+  /home/mahan/waylandcraft/src/main/java/dev/evvie/waylandcraft/render/BufferTexture.java:197: error: incompatible types: OptionalInt cannot be converted to Optional<Vector4fc>
+  			try (RenderPass renderPass = RenderSystem.getDevice().createCommandEncoder().createRenderPass(() -> "Dmabuf blit", target.getColorTextureView(), OptionalInt.of(0x00000000))) {
+  			                                                                                                                                                               ^
+  /home/mahan/waylandcraft/src/main/java/dev/evvie/waylandcraft/render/WindowFramebuffer.java:190: error: incompatible types: OptionalInt cannot be converted to Optional<Vector4fc>
+  			try(RenderPass pass = RenderSystem.getDevice().createCommandEncoder().createRenderPass(() -> "window framebuffer", tempTarget.getColorTextureView(), OptionalInt.of(0x00000000))) {
+  			                                                                                                                                                                   ^
+  /home/mahan/waylandcraft/src/main/java/dev/evvie/waylandcraft/render/WindowFramebuffer.java:209: error: incompatible types: OptionalInt cannot be converted to Optional<Vector4fc>
+  		try(RenderPass pass = RenderSystem.getDevice().createCommandEncoder().createRenderPass(() -> "window framebuffer unpremultiply", target.getColorTextureView(), OptionalInt.empty())) {
+  		                                                                                                                                                                                ^
+  /home/mahan/waylandcraft/src/main/java/dev/evvie/waylandcraft/render/WindowFramebuffer.java:228: error: incompatible types: OptionalInt cannot be converted to Optional<Vector4fc>
+  			try(RenderPass pass = RenderSystem.getDevice().createCommandEncoder().createRenderPass(() -> "window framebuffer damage", tempTarget.getColorTextureView(), OptionalInt.empty())) {
+  			                                                                                                                                                                             ^
+  /home/mahan/waylandcraft/src/main/java/dev/evvie/waylandcraft/render/WindowTranslucencyHotfix.java:40: error: incompatible types: OptionalInt cannot be converted to Optional<Vector4fc>
+  		try(RenderPass pass = RenderSystem.getDevice().createCommandEncoder().createRenderPass(() -> "translucency_hotfix", Minecraft.getInstance().gameRenderer.mainRenderTarget().getColorTextureView(), clearColor)) {
+  		                                                                                                                                                                                                   ^
+  /home/mahan/waylandcraft/src/main/java/dev/evvie/waylandcraft/render/WindowFramebuffer.java:41: error: cannot find symbol
+  import net.minecraft.client.renderer.DynamicUniformStorage;
+                                      ^
+    symbol:   class DynamicUniformStorage
+    location: package net.minecraft.client.renderer
+  /home/mahan/waylandcraft/src/main/java/dev/evvie/waylandcraft/render/WindowFramebuffer.java:95: error: cannot find symbol
+  	private static DynamicUniformStorage<WindowInfoUniform> uniformStorage = null;
+  	               ^
+    symbol:   class DynamicUniformStorage
+    location: class WindowFramebuffer
+  /home/mahan/waylandcraft/src/main/java/dev/evvie/waylandcraft/render/WindowFramebuffer.java:364: error: cannot find symbol
+  	private static record WindowInfoUniform(Matrix4fc mat, boolean alpha) implements DynamicUniform {
+  	                                                                                 ^
+    symbol:   class DynamicUniform
+    location: class WindowFramebuffer
+  /home/mahan/waylandcraft/src/main/java/dev/evvie/waylandcraft/mixin/IItemInHandRendererMixin.java:8: error: cannot find symbol
+  import net.minecraft.client.renderer.ItemInHandRenderer;
+                                      ^
+    symbol:   class ItemInHandRenderer
+    location: package net.minecraft.client.renderer
+  /home/mahan/waylandcraft/src/main/java/dev/evvie/waylandcraft/mixin/ItemInHandRendererMixin.java:15: error: cannot find symbol
+  import net.minecraft.client.renderer.ItemInHandRenderer;
+                                      ^
+    symbol:   class ItemInHandRenderer
+    location: package net.minecraft.client.renderer
+  /home/mahan/waylandcraft/src/main/java/dev/evvie/waylandcraft/mixin/KeyboardHandlerMixin.java:22: error: cannot find symbol
+  		if(Minecraft.getInstance().screen != null) return;
+  		                          ^
+    symbol:   variable screen
+    location: class Minecraft
+  /home/mahan/waylandcraft/src/main/java/dev/evvie/waylandcraft/render/WindowFramebuffer.java:119: error: cannot find symbol
+  			uniformStorage = new DynamicUniformStorage<WindowInfoUniform>("window framebuffer", WindowInfoUniform.SIZE, 2);
+  			                     ^
+    symbol:   class DynamicUniformStorage
+    location: class WindowFramebuffer
+  /home/mahan/waylandcraft/src/main/java/dev/evvie/waylandcraft/WaylandCraft.java:244: error: cannot find symbol
+  		boolean inWMScreen = Minecraft.getInstance().screen instanceof WindowManagerScreen;
+  		                                            ^
+    symbol:   variable screen
+    location: class Minecraft
+  /home/mahan/waylandcraft/src/main/java/dev/evvie/waylandcraft/WaylandCraft.java:497: error: cannot find symbol
+  		if(Minecraft.getInstance().screen instanceof WindowManagerScreen) {
+  		                          ^
+    symbol:   variable screen
+    location: class Minecraft
+  /home/mahan/waylandcraft/src/main/java/dev/evvie/waylandcraft/WaylandCraft.java:500: error: cannot find symbol
+  		else if(Minecraft.getInstance().screen != null) {
+  		                               ^
+    symbol:   variable screen
+    location: class Minecraft
+  /home/mahan/waylandcraft/src/main/java/dev/evvie/waylandcraft/render/RenderUtils.java:43: error: cannot find symbol
+  	private static final RenderPipeline.Snippet WINDOW_PIPELINE_SNIPPET = RenderPipeline.builder(RenderPipelines.MATRICES_PROJECTION_SNIPPET)
+  	                                                                                                            ^
+    symbol:   variable MATRICES_PROJECTION_SNIPPET
+    location: class RenderPipelines
+  /home/mahan/waylandcraft/src/main/java/dev/evvie/waylandcraft/render/WindowFramebuffer.java:368: error: method does not override or implement a method from a supertype
+  		@Override
+  		^
+  /home/mahan/waylandcraft/src/main/java/dev/evvie/waylandcraft/WaylandCraft.java:847: error: method does not override or implement a method from a supertype
+  		@Override
+  		^
+  Note: Some messages have been simplified; recompile with -Xdiags:verbose to get full output
+  /home/mahan/waylandcraft/src/main/java/dev/evvie/waylandcraft/mixin/IItemInHandRendererMixin.java:12: error: cannot find symbol
+  @Mixin(ItemInHandRenderer.class)
+         ^
+    symbol: class ItemInHandRenderer
+  /home/mahan/waylandcraft/src/main/java/dev/evvie/waylandcraft/mixin/ItemInHandRendererMixin.java:21: error: cannot find symbol
+  @Mixin(ItemInHandRenderer.class)
+         ^
+    symbol: class ItemInHandRenderer
+  /home/mahan/waylandcraft/src/main/java/dev/evvie/waylandcraft/render/WindowFramebuffer.java:89: error: cannot find symbol
+  		.withUniform("WindowInfo", UniformType.UNIFORM_BUFFER)
+  		^
+    symbol:   method withUniform(String,UniformType)
+    location: class Builder
+  /home/mahan/waylandcraft/src/main/java/dev/evvie/waylandcraft/WaylandCraft.java:158: error: cannot find symbol
+  			bridge = WaylandCraftBridge.start();
+  			                           ^
+    symbol:   method start()
+    location: class WaylandCraftBridge
+  /home/mahan/waylandcraft/src/main/java/dev/evvie/waylandcraft/WaylandCraft.java:293: error: cannot find symbol
+  		minecraft.getChatListener().handleSystemMessage(Component.literal("Wayland compositor running on " + waylandSocket), false);
+  		         ^
+    symbol:   method getChatListener()
+    location: variable minecraft of type Minecraft
+  /home/mahan/waylandcraft/src/main/java/dev/evvie/waylandcraft/WaylandCraft.java:294: error: cannot find symbol
+  		if(x11Display != null) minecraft.getChatListener().handleSystemMessage(Component.literal("xwayland-satellite running on " + x11Display), false);
+  		                                ^
+    symbol:   method getChatListener()
+    location: variable minecraft of type Minecraft
+  /home/mahan/waylandcraft/src/main/java/dev/evvie/waylandcraft/WaylandCraft.java:455: error: cannot find symbol
+  		if(Minecraft.getInstance().getOverlay() instanceof PointerCaptureOverlay overlay) {
+  		                          ^
+    symbol:   method getOverlay()
+    location: class Minecraft
+  /home/mahan/waylandcraft/src/main/java/dev/evvie/waylandcraft/WaylandCraft.java:457: error: cannot find symbol
+  			Minecraft.getInstance().setOverlay(null);
+  			                       ^
+    symbol:   method setOverlay(<null>)
+    location: class Minecraft
+  /home/mahan/waylandcraft/src/main/java/dev/evvie/waylandcraft/WaylandCraft.java:798: error: cannot find symbol
+  			if(Minecraft.getInstance().getOverlay() == null) Minecraft.getInstance().setOverlay(new PointerCaptureOverlay());
+  			                          ^
+    symbol:   method getOverlay()
+    location: class Minecraft
+  /home/mahan/waylandcraft/src/main/java/dev/evvie/waylandcraft/WaylandCraft.java:798: error: cannot find symbol
+  			if(Minecraft.getInstance().getOverlay() == null) Minecraft.getInstance().setOverlay(new PointerCaptureOverlay());
+  			                                                                        ^
+    symbol:   method setOverlay(WaylandCraft.PointerCaptureOverlay)
+    location: class Minecraft
+  /home/mahan/waylandcraft/src/main/java/dev/evvie/waylandcraft/mixin/MouseHandlerMixin.java:28: error: cannot find symbol
+  		if(Minecraft.getInstance().getOverlay() instanceof PointerCaptureOverlay && WaylandCraft.instance.pointerCapture != null) {
+  		                          ^
+    symbol:   method getOverlay()
+    location: class Minecraft
+  /home/mahan/waylandcraft/src/main/java/dev/evvie/waylandcraft/mixin/MouseHandlerMixin.java:40: error: cannot find symbol
+  		if(Minecraft.getInstance().getOverlay() instanceof PointerCaptureOverlay && WaylandCraft.instance.pointerCapture != null) {
+  		                          ^
+    symbol:   method getOverlay()
+    location: class Minecraft
+  /home/mahan/waylandcraft/src/main/java/dev/evvie/waylandcraft/render/WindowInHandRenderer.java:98: error: cannot find symbol
+  		((IItemInHandRendererMixin) Minecraft.getInstance().getEntityRenderDispatcher().getItemInHandRenderer()).invokeRenderPlayerArm(poseStack, collector, light, handHeight, attack, humanoidArm);
+  		                                                                               ^
+    symbol:   method getItemInHandRenderer()
+    location: class EntityRenderDispatcher
+  /home/mahan/waylandcraft/src/main/java/dev/evvie/waylandcraft/gui/SettingsWidget.java:339: error: cannot find symbol
+  			int digit = event.getDigit();
+  			                 ^
+    symbol:   method getDigit()
+    location: variable event of type KeyEvent
+  /home/mahan/waylandcraft/src/main/java/dev/evvie/waylandcraft/render/WindowFramebuffer.java:42: error: package net.minecraft.client.renderer.DynamicUniformStorage does not exist
+  import net.minecraft.client.renderer.DynamicUniformStorage.DynamicUniform;
+                                                            ^
+  44 errors
+
+* Try:
+> Check your code and dependencies to fix the compilation error(s)
+> Run with --scan to get full insights from a Build Scan (powered by Develocity).
+
+BUILD FAILED in 4s
+2 actionable tasks: 2 executed

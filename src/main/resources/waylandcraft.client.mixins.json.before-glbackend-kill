@@ -1,0 +1,26 @@
+{
+	"required": true,
+	"package": "dev.evvie.waylandcraft.mixin",
+	"compatibilityLevel": "JAVA_25",
+	"mixins": [
+		"MouseHandlerMixin",
+		"GlBackendMixin",
+		"KeyboardHandlerMixin",
+		"IMouseHandlerMixin",
+		"MinecraftMixin",
+		"GuiMixin",
+		"NativeImageMixin",
+		"ItemFrameRendererMixin",
+		"ItemFrameRenderStateMixin",
+		"IGlTextureMixin",
+		"FramerateLimitTrackerMixin",
+		"TitleScreenMixin",
+		"PauseScreenMixin"
+	],
+	"injectors": {
+		"defaultRequire": 1
+	},
+	"overwrites": {
+		"requireAnnotations": true
+	}
+}

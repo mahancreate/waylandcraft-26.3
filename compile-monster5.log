@@ -1,0 +1,35 @@
+
+> Configure project :
+Fabric Loom: 1.17.21
+WARNING: Native library not built! The built mod will not contain native code
+
+> Task :clean
+
+> Task :compileJava FAILED
+/home/mahan/waylandcraft/src/main/java/dev/evvie/waylandcraft/WaylandCraft.java:844: error: method does not override or implement a method from a supertype
+		@Override
+		^
+Note: /home/mahan/waylandcraft/src/main/java/dev/evvie/waylandcraft/WaylandCraft.java uses or overrides a deprecated API.
+Note: Recompile with -Xlint:deprecation for details.
+1 error
+
+[Incubating] Problems report is available at: file:///home/mahan/waylandcraft/build/reports/problems/problems-report.html
+
+FAILURE: Build failed with an exception.
+
+* What went wrong:
+Execution failed for task ':compileJava' (registered by plugin class 'org.gradle.api.plugins.JavaBasePlugin').
+> Compilation failed; see the compiler output below.
+  Note: /home/mahan/waylandcraft/src/main/java/dev/evvie/waylandcraft/WaylandCraft.java uses or overrides a deprecated API.
+  Note: Recompile with -Xlint:deprecation for details.
+  /home/mahan/waylandcraft/src/main/java/dev/evvie/waylandcraft/WaylandCraft.java:844: error: method does not override or implement a method from a supertype
+  		@Override
+  		^
+  1 error
+
+* Try:
+> Check your code and dependencies to fix the compilation error(s)
+> Run with --scan to get full insights from a Build Scan (powered by Develocity).
+
+BUILD FAILED in 3s
+2 actionable tasks: 2 executed

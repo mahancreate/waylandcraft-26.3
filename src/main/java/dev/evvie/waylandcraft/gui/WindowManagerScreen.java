@@ -8,8 +8,6 @@ import java.util.Optional;
 
 import org.jetbrains.annotations.Nullable;
 import org.joml.Matrix3x2fStack;
-import org.lwjgl.glfw.GLFW;
-
 import dev.evvie.waylandcraft.WaylandCraft;
 import dev.evvie.waylandcraft.WaylandCraftCommon;
 import dev.evvie.waylandcraft.bridge.WLCAbstractWindow;
@@ -199,8 +197,7 @@ public class WindowManagerScreen extends Screen {
 		if(focused == null || focused.fullscreen) return;
 		
 		wlc.bridge.sendMotionOutside();
-		GLFW.glfwSetInputMode(Minecraft.getInstance().getWindow().handle(), GLFW.GLFW_CURSOR, GLFW.GLFW_CURSOR_DISABLED);
-		
+        // 26.3 dirty port: SDL owns cursor mode
 		resizeMode = true;
 		resizeToplevel = focused;
 		resizeWidth = focused.geometry.width();
@@ -229,7 +226,7 @@ public class WindowManagerScreen extends Screen {
 				makes fullscreen windows properly take up the whole screen, \
 				disabling all of the other UI elements.
 				""";
-		minecraft.setScreen(new PopupScreen.Builder(this, Component.literal("Window Manager Help"))
+		minecraft.setScreenAndShow(new PopupScreen.Builder(this, Component.literal("Window Manager Help"))
 				.addMessage(Component.literal(message))
 				.addButton(Component.literal("Done"), (popup) -> popup.onClose())
 				.build());
@@ -239,17 +236,15 @@ public class WindowManagerScreen extends Screen {
 		if(resizeToplevel != null && resizeToplevel.isAlive()) wlc.bridge.resizeToplevel(resizeToplevel, resizeWidth, resizeHeight);
 		
 		long window = Minecraft.getInstance().getWindow().handle();
-		GLFW.glfwSetInputMode(window, GLFW.GLFW_CURSOR, GLFW.GLFW_CURSOR_NORMAL);
-		
+        // 26.3 dirty port: SDL owns cursor mode
 		/* <HACK> */
 		/* The following code makes the game remember at what position the cursor is after it was moved in disabled mode during resize */
 		double mouseX[] = new double[1];
 		double mouseY[] = new double[1];
-		GLFW.glfwGetCursorPos(window, mouseX, mouseY);
-		
+        // 26.3 dirty port: SDL owns cursor position
 		MouseHandler mouseHandler = Minecraft.getInstance().mouseHandler;
 		mouseHandler.setIgnoreFirstMove(); // don't accumulate any movement in accumulatedDX,DY
-		((IMouseHandlerMixin) mouseHandler).invokeOnMove(window, mouseX[0], mouseY[0]);
+		((IMouseHandlerMixin) mouseHandler).invokeOnMove(window, mouseX[0], mouseY[0], 0.0, 0.0);
 		/* </HACK> */
 		
 		resizeMode = false;
@@ -509,12 +504,12 @@ public class WindowManagerScreen extends Screen {
 	
 	@Override
 	public boolean keyPressed(KeyEvent event) {
-		if(event.key() == GLFW.GLFW_KEY_ESCAPE && !captureModeEnabled) {
+		if(event.key() == 256 && !captureModeEnabled) {
 			this.onClose();
 			return true;
 		}
 		
-		if(event.key() == GLFW.GLFW_KEY_Q && event.modifiers() == GLFW.GLFW_MOD_ALT) {
+		if(event.key() == 81 && event.modifiers() == 0x0004) {
 			captureModeEnabled = !captureModeEnabled;
 			return true;
 		}
@@ -526,7 +521,7 @@ public class WindowManagerScreen extends Screen {
 		
 		// Forward key press to current window
 		if(focused != null) {
-			int scancode = WaylandCraft.correctScancode(event.scancode());
+			int scancode = WaylandCraft.correctScancode(event.keycode());
 			wlc.bridge.pressKey(scancode);
 			return true;
 		}
@@ -541,7 +536,7 @@ public class WindowManagerScreen extends Screen {
 		if(super.keyReleased(event)) return true;
 		
 		if(focused != null) {
-			int scancode = WaylandCraft.correctScancode(event.scancode());
+			int scancode = WaylandCraft.correctScancode(event.keycode());
 			wlc.bridge.releaseKey(scancode);
 			return true;
 		}

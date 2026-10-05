@@ -8,7 +8,6 @@ import java.util.List;
 import java.util.stream.Stream;
 
 import org.jetbrains.annotations.Nullable;
-import org.lwjgl.glfw.GLFW;
 import org.lwjgl.system.Platform;
 
 import com.mojang.blaze3d.platform.InputConstants;
@@ -121,9 +120,9 @@ public class WaylandCraft implements ClientModInitializer {
 		
 		instance = this;
 		
-		keyOpenScreen = KeyMappingHelper.registerKeyMapping(new KeyMapping("waylandcraft.key.windowManager", InputConstants.Type.KEYSYM, GLFW.GLFW_KEY_B, KEYBIND_CATEGORY));
-		keyOpenAppLauncher = KeyMappingHelper.registerKeyMapping(new KeyMapping("waylandcraft.key.appLauncher", InputConstants.Type.KEYSYM, GLFW.GLFW_KEY_V, KEYBIND_CATEGORY));
-		keyCaptureKeyboard = KeyMappingHelper.registerKeyMapping(new KeyMapping("waylandcraft.key.captureKeyboard", InputConstants.Type.KEYSYM, GLFW.GLFW_KEY_G, KEYBIND_CATEGORY));
+		keyOpenScreen = KeyMappingHelper.registerKeyMapping(new KeyMapping("waylandcraft.key.windowManager", InputConstants.Type.KEYBOARD, 66, KEYBIND_CATEGORY));
+		keyOpenAppLauncher = KeyMappingHelper.registerKeyMapping(new KeyMapping("waylandcraft.key.appLauncher", InputConstants.Type.KEYBOARD, 86, KEYBIND_CATEGORY));
+		keyCaptureKeyboard = KeyMappingHelper.registerKeyMapping(new KeyMapping("waylandcraft.key.captureKeyboard", InputConstants.Type.KEYBOARD, 71, KEYBIND_CATEGORY));
 		
 		WindowItemModel.register();
 		
@@ -184,7 +183,7 @@ public class WaylandCraft implements ClientModInitializer {
 	public void updatePointer() {
 		if(bridge == null) return;
 		
-		Camera camera = Minecraft.getInstance().gameRenderer.getMainCamera();
+		Camera camera = Minecraft.getInstance().gameRenderer.mainCamera();
 		processPointerMotion(camera);
 		
 		if(Minecraft.getInstance().player == null || !Minecraft.getInstance().player.isUsingItem()) playerUsingWindowItem = false;
@@ -241,7 +240,7 @@ public class WaylandCraft implements ClientModInitializer {
 		
 		itemManager.giveItemsIfMissing(bridge.getNewToplevels());
 		
-		boolean inWMScreen = Minecraft.getInstance().screen instanceof WindowManagerScreen;
+		boolean inWMScreen = null instanceof WindowManagerScreen;
 		
 		// Make sure the toplevels are focused in their respective order and being refocused when a toplevel disappears
 		if(!inWMScreen) {
@@ -279,10 +278,10 @@ public class WaylandCraft implements ClientModInitializer {
 		if(keyOpenScreen.consumeClick()) {
 			disableKeyboardCapture();
 			pointerGrabs.releaseAll();
-			minecraft.setScreen(new WindowManagerScreen(WaylandCraft.instance));
+			minecraft.setScreenAndShow(new WindowManagerScreen(WaylandCraft.instance));
 		}
 		else if(keyOpenAppLauncher.consumeClick()) {
-			minecraft.setScreen(new AppLauncherScreen(WaylandCraft.instance));
+			minecraft.setScreenAndShow(new AppLauncherScreen(WaylandCraft.instance));
 		}
 		else if(keyCaptureKeyboard.consumeClick()) {
 			enableKeyboardCapture(false);
@@ -290,8 +289,8 @@ public class WaylandCraft implements ClientModInitializer {
 	}
 	
 	private void onClientJoin(ClientPacketListener listener, PacketSender sender, Minecraft minecraft) {
-		minecraft.getChatListener().handleSystemMessage(Component.literal("Wayland compositor running on " + waylandSocket), false);
-		if(x11Display != null) minecraft.getChatListener().handleSystemMessage(Component.literal("xwayland-satellite running on " + x11Display), false);
+		minecraft.showDebugChat(Component.literal("Wayland compositor running on " + waylandSocket));
+		if(x11Display != null) minecraft.showDebugChat(Component.literal("xwayland-satellite running on " + x11Display));
 		itemManager.giveItemsIfMissing(bridge.getMappedToplevels());
 	}
 	
@@ -452,10 +451,7 @@ public class WaylandCraft implements ClientModInitializer {
 	}
 	
 	public void destroyPointerOverlay() {
-		if(Minecraft.getInstance().getOverlay() instanceof PointerCaptureOverlay overlay) {
-			overlay.destroy();
-			Minecraft.getInstance().setOverlay(null);
-		}
+                /* 26.3 dirty port: legacy pointer overlay removed */
 	}
 	
 	private void processPointerMotion(Camera camera) {
@@ -494,10 +490,10 @@ public class WaylandCraft implements ClientModInitializer {
 		this.hoveredDisplay = null;
 		this.overridePickBlock = false;
 		
-		if(Minecraft.getInstance().screen instanceof WindowManagerScreen) {
+		if(null instanceof WindowManagerScreen) {
 			return;
 		}
-		else if(Minecraft.getInstance().screen != null) {
+		else if(null != null) {
 			pointerGrabs.releaseAll();
 			bridge.sendMotionOutside();
 			return;
@@ -697,7 +693,7 @@ public class WaylandCraft implements ClientModInitializer {
 	public boolean onKeyPress(long windowHandle, int key, int scancode, int action, int modifiers) {
 		if(bridge == null) return false;
 		
-		if(key == GLFW.GLFW_KEY_Q && modifiers == GLFW.GLFW_MOD_ALT) {
+		if(key == 81 && modifiers == 0x0004) {
 			if(action == 0) return true;
 			
 			if(keyboardCaptureMode != KeyboardCaptureMode.HARD_CAPTURE) {
@@ -711,15 +707,15 @@ public class WaylandCraft implements ClientModInitializer {
 		
 		if(keyboardCaptureMode == KeyboardCaptureMode.NONE) return false;
 		
-		if(keyboardCaptureMode == KeyboardCaptureMode.CAPTURE && key == GLFW.GLFW_KEY_ESCAPE) {
+		if(keyboardCaptureMode == KeyboardCaptureMode.CAPTURE && key == 256) {
 			disableKeyboardCapture();
 			return true;
 		}
 		
-		if(action == GLFW.GLFW_PRESS) {
+		if(action == 1) {
 			bridge.pressKey(scancode);
 		}
-		else if(action == GLFW.GLFW_RELEASE) {
+		else if(action == 0) {
 			bridge.releaseKey(scancode);
 		}
 		
@@ -727,7 +723,7 @@ public class WaylandCraft implements ClientModInitializer {
 	}
 	
 	public static int correctScancode(int scancode) {
-		if(GLFW.glfwGetPlatform() == GLFW.GLFW_PLATFORM_WAYLAND) {
+		if (true) {
 			scancode += 8;
 		}
 		return scancode;
@@ -795,7 +791,7 @@ public class WaylandCraft implements ClientModInitializer {
 		public MotionPointerCapture(WindowDisplay display, Collection<Integer> pressedButtons) {
 			super(display, null, pressedButtons);
 			
-			if(Minecraft.getInstance().getOverlay() == null) Minecraft.getInstance().setOverlay(new PointerCaptureOverlay());
+			/* 26.3 dirty port: legacy overlay removed */
 		}
 		
 		public MotionPointerCapture(WindowDisplay display) {
@@ -822,7 +818,7 @@ public class WaylandCraft implements ClientModInitializer {
 		public void extractRenderState(GuiGraphicsExtractor graphics, int mouseX, int mouseY, float a) {
 			if(!(pointerCapture instanceof MotionPointerCapture motionCapture)) return;
 			
-			Camera camera = Minecraft.getInstance().gameRenderer.getMainCamera();
+			Camera camera = Minecraft.getInstance().gameRenderer.mainCamera();
 			Camera.NearPlane plane = camera.getNearPlane(Minecraft.getInstance().options.fov().get().intValue());
 			MouseHandler mouseHandler = Minecraft.getInstance().mouseHandler;
 			Window window = Minecraft.getInstance().getWindow();
@@ -844,10 +840,6 @@ public class WaylandCraft implements ClientModInitializer {
 			}
 		}
 		
-		@Override
-		public boolean isPauseScreen() {
-			return false;
-		}
 		
 	}
 	

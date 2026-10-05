@@ -1,8 +1,6 @@
 package dev.evvie.waylandcraft.gui;
 
 import org.jetbrains.annotations.Nullable;
-import org.lwjgl.glfw.GLFW;
-
 import dev.evvie.waylandcraft.WaylandCraft;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Font;
@@ -320,8 +318,8 @@ public class SettingsWidget extends AbstractWidget {
 		
 		@Override
 		public boolean onKeyPressed(KeyEvent event) {
-			boolean isEnter = event.key() == GLFW.GLFW_KEY_ENTER;
-			boolean isBackspace = event.key() == GLFW.GLFW_KEY_BACKSPACE;
+			boolean isEnter = event.key() == 257;
+			boolean isBackspace = event.key() == 259;
 			
 			if(isEnter && entry != null) {
 				stopEntry();
@@ -336,7 +334,7 @@ public class SettingsWidget extends AbstractWidget {
 				return true;
 			}
 			
-			int digit = event.getDigit();
+			int digit = (event.keycode() >= 48 && event.keycode() <= 57) ? event.keycode() - 48 : -1;
 			if(digit != -1) {
 				if(entry != null) entry += digit;
 				else entry = "" + digit;
@@ -398,7 +396,7 @@ public class SettingsWidget extends AbstractWidget {
 		
 		@Override
 		public boolean onKeyPressed(KeyEvent event) {
-			if(event.key() == GLFW.GLFW_KEY_ENTER) {
+			if(event.key() == 257) {
 				saveValue();
 				return true;
 			}

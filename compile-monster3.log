@@ -1,0 +1,279 @@
+
+> Configure project :
+Fabric Loom: 1.17.21
+WARNING: Native library not built! The built mod will not contain native code
+
+> Task :clean
+
+> Task :compileJava FAILED
+/home/mahan/waylandcraft/src/main/java/dev/evvie/waylandcraft/render/WindowFramebuffer.java:41: error: cannot find symbol
+import net.minecraft.client.renderer.DynamicUniformStorage;
+                                    ^
+  symbol:   class DynamicUniformStorage
+  location: package net.minecraft.client.renderer
+/home/mahan/waylandcraft/src/main/java/dev/evvie/waylandcraft/render/WindowFramebuffer.java:42: error: package net.minecraft.client.renderer.DynamicUniformStorage does not exist
+import net.minecraft.client.renderer.DynamicUniformStorage.DynamicUniform;
+                                                          ^
+/home/mahan/waylandcraft/src/main/java/dev/evvie/waylandcraft/render/WindowFramebuffer.java:95: error: cannot find symbol
+	private static DynamicUniformStorage<WindowInfoUniform> uniformStorage = null;
+	               ^
+  symbol:   class DynamicUniformStorage
+  location: class WindowFramebuffer
+/home/mahan/waylandcraft/src/main/java/dev/evvie/waylandcraft/render/WindowFramebuffer.java:364: error: cannot find symbol
+	private static record WindowInfoUniform(Matrix4fc mat, boolean alpha) implements DynamicUniform {
+	                                                                                 ^
+  symbol:   class DynamicUniform
+  location: class WindowFramebuffer
+/home/mahan/waylandcraft/src/main/java/dev/evvie/waylandcraft/mixin/IItemInHandRendererMixin.java:8: error: cannot find symbol
+import net.minecraft.client.renderer.ItemInHandRenderer;
+                                    ^
+  symbol:   class ItemInHandRenderer
+  location: package net.minecraft.client.renderer
+/home/mahan/waylandcraft/src/main/java/dev/evvie/waylandcraft/mixin/ItemInHandRendererMixin.java:15: error: cannot find symbol
+import net.minecraft.client.renderer.ItemInHandRenderer;
+                                    ^
+  symbol:   class ItemInHandRenderer
+  location: package net.minecraft.client.renderer
+/home/mahan/waylandcraft/src/main/java/dev/evvie/waylandcraft/mixin/IItemInHandRendererMixin.java:12: error: cannot find symbol
+@Mixin(ItemInHandRenderer.class)
+       ^
+  symbol: class ItemInHandRenderer
+/home/mahan/waylandcraft/src/main/java/dev/evvie/waylandcraft/mixin/ItemInHandRendererMixin.java:21: error: cannot find symbol
+@Mixin(ItemInHandRenderer.class)
+       ^
+  symbol: class ItemInHandRenderer
+/home/mahan/waylandcraft/src/main/java/dev/evvie/waylandcraft/mixin/KeyboardHandlerMixin.java:22: error: cannot find symbol
+		if(Minecraft.getInstance().screen != null) return;
+		                          ^
+  symbol:   variable screen
+  location: class Minecraft
+/home/mahan/waylandcraft/src/main/java/dev/evvie/waylandcraft/render/WindowFramebuffer.java:53: error: self-reference in initializer
+                	.withBindGroupLayout(WINDOW_INFO_LAYOUT)
+                	                     ^
+/home/mahan/waylandcraft/src/main/java/dev/evvie/waylandcraft/render/WindowFramebuffer.java:53: error: cannot find symbol
+                	.withBindGroupLayout(WINDOW_INFO_LAYOUT)
+                	^
+  symbol:   method withBindGroupLayout(BindGroupLayout)
+  location: class Builder
+/home/mahan/waylandcraft/src/main/java/dev/evvie/waylandcraft/render/WindowFramebuffer.java:119: error: cannot find symbol
+			uniformStorage = new DynamicUniformStorage<WindowInfoUniform>("window framebuffer", WindowInfoUniform.SIZE, 2);
+			                     ^
+  symbol:   class DynamicUniformStorage
+  location: class WindowFramebuffer
+/home/mahan/waylandcraft/src/main/java/dev/evvie/waylandcraft/render/WindowFramebuffer.java:157: error: cannot find symbol
+			tempTarget = new TextureTarget(name() + "-temp", width, height, GpuFormat.RGBA8_UNORM, null);
+			                                                                ^
+  symbol:   variable GpuFormat
+  location: class WindowFramebuffer
+/home/mahan/waylandcraft/src/main/java/dev/evvie/waylandcraft/render/WindowFramebuffer.java:161: error: cannot find symbol
+			target = new TextureTarget(name(), width, height, GpuFormat.RGBA8_UNORM, null);
+			                                                  ^
+  symbol:   variable GpuFormat
+  location: class WindowFramebuffer
+/home/mahan/waylandcraft/src/main/java/dev/evvie/waylandcraft/render/WindowFramebuffer.java:368: error: method does not override or implement a method from a supertype
+		@Override
+		^
+/home/mahan/waylandcraft/src/main/java/dev/evvie/waylandcraft/WaylandCraft.java:158: error: cannot find symbol
+			bridge = WaylandCraftBridge.start();
+			                           ^
+  symbol:   method start()
+  location: class WaylandCraftBridge
+/home/mahan/waylandcraft/src/main/java/dev/evvie/waylandcraft/WaylandCraft.java:244: error: cannot find symbol
+		boolean inWMScreen = Minecraft.getInstance().screen instanceof WindowManagerScreen;
+		                                            ^
+  symbol:   variable screen
+  location: class Minecraft
+/home/mahan/waylandcraft/src/main/java/dev/evvie/waylandcraft/WaylandCraft.java:455: error: cannot find symbol
+		if(Minecraft.getInstance().getOverlay() instanceof PointerCaptureOverlay overlay) {
+		                          ^
+  symbol:   method getOverlay()
+  location: class Minecraft
+/home/mahan/waylandcraft/src/main/java/dev/evvie/waylandcraft/WaylandCraft.java:457: error: cannot find symbol
+			Minecraft.getInstance().setOverlay(null);
+			                       ^
+  symbol:   method setOverlay(<null>)
+  location: class Minecraft
+/home/mahan/waylandcraft/src/main/java/dev/evvie/waylandcraft/WaylandCraft.java:497: error: cannot find symbol
+		if(Minecraft.getInstance().screen instanceof WindowManagerScreen) {
+		                          ^
+  symbol:   variable screen
+  location: class Minecraft
+/home/mahan/waylandcraft/src/main/java/dev/evvie/waylandcraft/WaylandCraft.java:500: error: cannot find symbol
+		else if(Minecraft.getInstance().screen != null) {
+		                               ^
+  symbol:   variable screen
+  location: class Minecraft
+/home/mahan/waylandcraft/src/main/java/dev/evvie/waylandcraft/WaylandCraft.java:798: error: cannot find symbol
+			if(Minecraft.getInstance().getOverlay() == null) Minecraft.getInstance().setOverlay(new PointerCaptureOverlay());
+			                          ^
+  symbol:   method getOverlay()
+  location: class Minecraft
+/home/mahan/waylandcraft/src/main/java/dev/evvie/waylandcraft/WaylandCraft.java:798: error: cannot find symbol
+			if(Minecraft.getInstance().getOverlay() == null) Minecraft.getInstance().setOverlay(new PointerCaptureOverlay());
+			                                                                        ^
+  symbol:   method setOverlay(WaylandCraft.PointerCaptureOverlay)
+  location: class Minecraft
+/home/mahan/waylandcraft/src/main/java/dev/evvie/waylandcraft/WaylandCraft.java:847: error: method does not override or implement a method from a supertype
+		@Override
+		^
+/home/mahan/waylandcraft/src/main/java/dev/evvie/waylandcraft/mixin/MouseHandlerMixin.java:28: error: cannot find symbol
+		if(Minecraft.getInstance().getOverlay() instanceof PointerCaptureOverlay && WaylandCraft.instance.pointerCapture != null) {
+		                          ^
+  symbol:   method getOverlay()
+  location: class Minecraft
+/home/mahan/waylandcraft/src/main/java/dev/evvie/waylandcraft/mixin/MouseHandlerMixin.java:40: error: cannot find symbol
+		if(Minecraft.getInstance().getOverlay() instanceof PointerCaptureOverlay && WaylandCraft.instance.pointerCapture != null) {
+		                          ^
+  symbol:   method getOverlay()
+  location: class Minecraft
+/home/mahan/waylandcraft/src/main/java/dev/evvie/waylandcraft/render/WindowInHandRenderer.java:99: error: cannot find symbol
+		((IItemInHandRendererMixin) Minecraft.getInstance().getEntityRenderDispatcher().getItemInHandRenderer()).invokeRenderPlayerArm(poseStack, collector, light, handHeight, attack, humanoidArm);
+		                                                                               ^
+  symbol:   method getItemInHandRenderer()
+  location: class EntityRenderDispatcher
+Note: /home/mahan/waylandcraft/src/main/java/dev/evvie/waylandcraft/WaylandCraft.java uses or overrides a deprecated API.
+Note: Recompile with -Xlint:deprecation for details.
+27 errors
+
+[Incubating] Problems report is available at: file:///home/mahan/waylandcraft/build/reports/problems/problems-report.html
+
+FAILURE: Build failed with an exception.
+
+* What went wrong:
+Execution failed for task ':compileJava' (registered by plugin class 'org.gradle.api.plugins.JavaBasePlugin').
+> Compilation failed; see the compiler output below.
+  Note: /home/mahan/waylandcraft/src/main/java/dev/evvie/waylandcraft/WaylandCraft.java uses or overrides a deprecated API.
+  Note: Recompile with -Xlint:deprecation for details.
+  /home/mahan/waylandcraft/src/main/java/dev/evvie/waylandcraft/render/WindowFramebuffer.java:53: error: self-reference in initializer
+                  	.withBindGroupLayout(WINDOW_INFO_LAYOUT)
+                  	                     ^
+  /home/mahan/waylandcraft/src/main/java/dev/evvie/waylandcraft/render/WindowFramebuffer.java:41: error: cannot find symbol
+  import net.minecraft.client.renderer.DynamicUniformStorage;
+                                      ^
+    symbol:   class DynamicUniformStorage
+    location: package net.minecraft.client.renderer
+  /home/mahan/waylandcraft/src/main/java/dev/evvie/waylandcraft/render/WindowFramebuffer.java:95: error: cannot find symbol
+  	private static DynamicUniformStorage<WindowInfoUniform> uniformStorage = null;
+  	               ^
+    symbol:   class DynamicUniformStorage
+    location: class WindowFramebuffer
+  /home/mahan/waylandcraft/src/main/java/dev/evvie/waylandcraft/render/WindowFramebuffer.java:364: error: cannot find symbol
+  	private static record WindowInfoUniform(Matrix4fc mat, boolean alpha) implements DynamicUniform {
+  	                                                                                 ^
+    symbol:   class DynamicUniform
+    location: class WindowFramebuffer
+  /home/mahan/waylandcraft/src/main/java/dev/evvie/waylandcraft/mixin/IItemInHandRendererMixin.java:8: error: cannot find symbol
+  import net.minecraft.client.renderer.ItemInHandRenderer;
+                                      ^
+    symbol:   class ItemInHandRenderer
+    location: package net.minecraft.client.renderer
+  /home/mahan/waylandcraft/src/main/java/dev/evvie/waylandcraft/mixin/ItemInHandRendererMixin.java:15: error: cannot find symbol
+  import net.minecraft.client.renderer.ItemInHandRenderer;
+                                      ^
+    symbol:   class ItemInHandRenderer
+    location: package net.minecraft.client.renderer
+  /home/mahan/waylandcraft/src/main/java/dev/evvie/waylandcraft/mixin/KeyboardHandlerMixin.java:22: error: cannot find symbol
+  		if(Minecraft.getInstance().screen != null) return;
+  		                          ^
+    symbol:   variable screen
+    location: class Minecraft
+  /home/mahan/waylandcraft/src/main/java/dev/evvie/waylandcraft/render/WindowFramebuffer.java:119: error: cannot find symbol
+  			uniformStorage = new DynamicUniformStorage<WindowInfoUniform>("window framebuffer", WindowInfoUniform.SIZE, 2);
+  			                     ^
+    symbol:   class DynamicUniformStorage
+    location: class WindowFramebuffer
+  /home/mahan/waylandcraft/src/main/java/dev/evvie/waylandcraft/render/WindowFramebuffer.java:157: error: cannot find symbol
+  			tempTarget = new TextureTarget(name() + "-temp", width, height, GpuFormat.RGBA8_UNORM, null);
+  			                                                                ^
+    symbol:   variable GpuFormat
+    location: class WindowFramebuffer
+  /home/mahan/waylandcraft/src/main/java/dev/evvie/waylandcraft/render/WindowFramebuffer.java:161: error: cannot find symbol
+  			target = new TextureTarget(name(), width, height, GpuFormat.RGBA8_UNORM, null);
+  			                                                  ^
+    symbol:   variable GpuFormat
+    location: class WindowFramebuffer
+  /home/mahan/waylandcraft/src/main/java/dev/evvie/waylandcraft/WaylandCraft.java:244: error: cannot find symbol
+  		boolean inWMScreen = Minecraft.getInstance().screen instanceof WindowManagerScreen;
+  		                                            ^
+    symbol:   variable screen
+    location: class Minecraft
+  /home/mahan/waylandcraft/src/main/java/dev/evvie/waylandcraft/WaylandCraft.java:497: error: cannot find symbol
+  		if(Minecraft.getInstance().screen instanceof WindowManagerScreen) {
+  		                          ^
+    symbol:   variable screen
+    location: class Minecraft
+  /home/mahan/waylandcraft/src/main/java/dev/evvie/waylandcraft/WaylandCraft.java:500: error: cannot find symbol
+  		else if(Minecraft.getInstance().screen != null) {
+  		                               ^
+    symbol:   variable screen
+    location: class Minecraft
+  /home/mahan/waylandcraft/src/main/java/dev/evvie/waylandcraft/render/WindowFramebuffer.java:368: error: method does not override or implement a method from a supertype
+  		@Override
+  		^
+  /home/mahan/waylandcraft/src/main/java/dev/evvie/waylandcraft/WaylandCraft.java:847: error: method does not override or implement a method from a supertype
+  		@Override
+  		^
+  /home/mahan/waylandcraft/src/main/java/dev/evvie/waylandcraft/mixin/IItemInHandRendererMixin.java:12: error: cannot find symbol
+  @Mixin(ItemInHandRenderer.class)
+         ^
+    symbol: class ItemInHandRenderer
+  /home/mahan/waylandcraft/src/main/java/dev/evvie/waylandcraft/mixin/ItemInHandRendererMixin.java:21: error: cannot find symbol
+  @Mixin(ItemInHandRenderer.class)
+         ^
+    symbol: class ItemInHandRenderer
+  /home/mahan/waylandcraft/src/main/java/dev/evvie/waylandcraft/render/WindowFramebuffer.java:53: error: cannot find symbol
+                  	.withBindGroupLayout(WINDOW_INFO_LAYOUT)
+                  	^
+    symbol:   method withBindGroupLayout(BindGroupLayout)
+    location: class Builder
+  /home/mahan/waylandcraft/src/main/java/dev/evvie/waylandcraft/WaylandCraft.java:158: error: cannot find symbol
+  			bridge = WaylandCraftBridge.start();
+  			                           ^
+    symbol:   method start()
+    location: class WaylandCraftBridge
+  /home/mahan/waylandcraft/src/main/java/dev/evvie/waylandcraft/WaylandCraft.java:455: error: cannot find symbol
+  		if(Minecraft.getInstance().getOverlay() instanceof PointerCaptureOverlay overlay) {
+  		                          ^
+    symbol:   method getOverlay()
+    location: class Minecraft
+  /home/mahan/waylandcraft/src/main/java/dev/evvie/waylandcraft/WaylandCraft.java:457: error: cannot find symbol
+  			Minecraft.getInstance().setOverlay(null);
+  			                       ^
+    symbol:   method setOverlay(<null>)
+    location: class Minecraft
+  /home/mahan/waylandcraft/src/main/java/dev/evvie/waylandcraft/WaylandCraft.java:798: error: cannot find symbol
+  			if(Minecraft.getInstance().getOverlay() == null) Minecraft.getInstance().setOverlay(new PointerCaptureOverlay());
+  			                          ^
+    symbol:   method getOverlay()
+    location: class Minecraft
+  /home/mahan/waylandcraft/src/main/java/dev/evvie/waylandcraft/WaylandCraft.java:798: error: cannot find symbol
+  			if(Minecraft.getInstance().getOverlay() == null) Minecraft.getInstance().setOverlay(new PointerCaptureOverlay());
+  			                                                                        ^
+    symbol:   method setOverlay(WaylandCraft.PointerCaptureOverlay)
+    location: class Minecraft
+  /home/mahan/waylandcraft/src/main/java/dev/evvie/waylandcraft/mixin/MouseHandlerMixin.java:28: error: cannot find symbol
+  		if(Minecraft.getInstance().getOverlay() instanceof PointerCaptureOverlay && WaylandCraft.instance.pointerCapture != null) {
+  		                          ^
+    symbol:   method getOverlay()
+    location: class Minecraft
+  /home/mahan/waylandcraft/src/main/java/dev/evvie/waylandcraft/mixin/MouseHandlerMixin.java:40: error: cannot find symbol
+  		if(Minecraft.getInstance().getOverlay() instanceof PointerCaptureOverlay && WaylandCraft.instance.pointerCapture != null) {
+  		                          ^
+    symbol:   method getOverlay()
+    location: class Minecraft
+  /home/mahan/waylandcraft/src/main/java/dev/evvie/waylandcraft/render/WindowInHandRenderer.java:99: error: cannot find symbol
+  		((IItemInHandRendererMixin) Minecraft.getInstance().getEntityRenderDispatcher().getItemInHandRenderer()).invokeRenderPlayerArm(poseStack, collector, light, handHeight, attack, humanoidArm);
+  		                                                                               ^
+    symbol:   method getItemInHandRenderer()
+    location: class EntityRenderDispatcher
+  /home/mahan/waylandcraft/src/main/java/dev/evvie/waylandcraft/render/WindowFramebuffer.java:42: error: package net.minecraft.client.renderer.DynamicUniformStorage does not exist
+  import net.minecraft.client.renderer.DynamicUniformStorage.DynamicUniform;
+                                                            ^
+  27 errors
+
+* Try:
+> Check your code and dependencies to fix the compilation error(s)
+> Run with --scan to get full insights from a Build Scan (powered by Develocity).
+
+BUILD FAILED in 3s
+2 actionable tasks: 2 executed

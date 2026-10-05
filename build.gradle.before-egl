@@ -37,11 +37,10 @@ dependencies {
     implementation "net.fabricmc.fabric-api:fabric-api:${project.fabric_version}"
     compileOnly "maven.modrinth:iris:${project.iris_version}"
 
-    // 26.3 dirty port: EGL directly, NO GLFW
-    implementation "org.lwjgl:lwjgl-egl:3.4.3"
-    include "org.lwjgl:lwjgl-egl:3.4.3"
-
-
+    // DIRTY 26.3 PORT: Minecraft dropped GLFW for SDL3,
+    // but WaylandCraft still directly uses GLFW.
+    implementation "org.lwjgl:lwjgl-glfw:3.4.3"
+    runtimeOnly "org.lwjgl:lwjgl-glfw:3.4.3:natives-linux"
 }
 
 processResources {

@@ -1,32 +1,36 @@
 package dev.evvie.waylandcraft.render;
+import com.mojang.renderpearl.api.GpuFormat;
+import java.util.Optional;
+import net.minecraft.client.renderer.BindGroupLayouts;
+import com.mojang.renderpearl.api.pipeline.IndexType;
+import com.mojang.renderpearl.api.pipeline.PrimitiveTopology;
 
 import java.nio.ByteBuffer;
 import java.util.ArrayList;
-import java.util.OptionalInt;
 
 import org.joml.Matrix4fc;
 
-import com.mojang.blaze3d.buffers.GpuBuffer;
-import com.mojang.blaze3d.buffers.GpuBufferSlice;
+import com.mojang.renderpearl.api.pipeline.BindGroupLayout;
+import com.mojang.renderpearl.api.buffers.GpuBuffer;
+import com.mojang.renderpearl.api.buffers.GpuBufferSlice;
 import com.mojang.blaze3d.buffers.Std140Builder;
 import com.mojang.blaze3d.buffers.Std140SizeCalculator;
-import com.mojang.blaze3d.pipeline.BlendFunction;
-import com.mojang.blaze3d.pipeline.ColorTargetState;
-import com.mojang.blaze3d.pipeline.RenderPipeline;
+import com.mojang.renderpearl.api.pipeline.BlendFunction;
+import com.mojang.renderpearl.api.pipeline.ColorTargetState;
+import com.mojang.renderpearl.api.pipeline.RenderPipeline;
 import com.mojang.blaze3d.pipeline.TextureTarget;
-import com.mojang.blaze3d.platform.DestFactor;
-import com.mojang.blaze3d.platform.SourceFactor;
-import com.mojang.blaze3d.shaders.UniformType;
-import com.mojang.blaze3d.systems.RenderPass;
+import com.mojang.renderpearl.api.pipeline.BlendFactor;
+import com.mojang.renderpearl.api.pipeline.UniformType;
+import com.mojang.renderpearl.api.commands.RenderPass;
 import com.mojang.blaze3d.systems.RenderSystem;
-import com.mojang.blaze3d.textures.FilterMode;
-import com.mojang.blaze3d.textures.GpuTextureView;
+import com.mojang.renderpearl.api.textures.FilterMode;
+import com.mojang.renderpearl.api.textures.GpuTextureView;
 import com.mojang.blaze3d.vertex.BufferBuilder;
 import com.mojang.blaze3d.vertex.ByteBufferBuilder;
 import com.mojang.blaze3d.vertex.DefaultVertexFormat;
 import com.mojang.blaze3d.vertex.MeshData;
 import com.mojang.blaze3d.vertex.PoseStack;
-import com.mojang.blaze3d.vertex.VertexFormat;
+import com.mojang.renderpearl.api.vertex.VertexFormat;
 
 import dev.evvie.waylandcraft.WaylandCraftCommon;
 import dev.evvie.waylandcraft.bridge.WLCSurface;
@@ -34,8 +38,6 @@ import dev.evvie.waylandcraft.bridge.WLCSurface.SurfaceDamage;
 import dev.evvie.waylandcraft.bridge.WLCSurface.ViewportSource;
 import dev.evvie.waylandcraft.displays.FramebufferRenderable;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.renderer.DynamicUniformStorage;
-import net.minecraft.client.renderer.DynamicUniformStorage.DynamicUniform;
 import net.minecraft.client.renderer.RenderPipelines;
 import net.minecraft.client.renderer.texture.AbstractTexture;
 import net.minecraft.client.renderer.texture.MissingTextureAtlasSprite;
@@ -44,43 +46,52 @@ import net.minecraft.resources.Identifier;
 
 public class WindowFramebuffer implements FramebufferRenderable {
 	
+	private static final BindGroupLayout WINDOW_INFO_LAYOUT =
+        	BindGroupLayout.builder()
+                	.withUniform("WindowInfo", UniformType.UNIFORM_BUFFER)
+                	.build();
+
+
 	public static final RenderPipeline WINDOW_PIPELINE = RenderPipelines.register(
 		RenderPipeline.builder()
 		.withLocation(Identifier.fromNamespaceAndPath(WaylandCraftCommon.MOD_ID, "pipeline/window"))
 		.withVertexShader(Identifier.fromNamespaceAndPath(WaylandCraftCommon.MOD_ID, "window"))
 		.withFragmentShader(Identifier.fromNamespaceAndPath(WaylandCraftCommon.MOD_ID, "window"))
-		.withVertexFormat(DefaultVertexFormat.POSITION_TEX, VertexFormat.Mode.QUADS)
-		.withSampler("Sampler0")
-		.withUniform("WindowInfo", UniformType.UNIFORM_BUFFER)
-		.withColorTargetState(new ColorTargetState(new BlendFunction(SourceFactor.ONE, DestFactor.ONE_MINUS_SRC_ALPHA)))
+		.withVertexBinding(0, DefaultVertexFormat.POSITION_TEX)
+                .withPrimitiveTopology(PrimitiveTopology.QUADS)
+		.withBindGroupLayout(WINDOW_INFO_LAYOUT)
+		.withColorTargetState(new ColorTargetState(new BlendFunction(BlendFactor.ONE, BlendFactor.ONE_MINUS_SRC_ALPHA)))
 		.withCull(false)
 		.build()
 	);
 	
 	public static final RenderPipeline UNPREMULTIPLY_PIPELINE = RenderPipelines.register(
-		RenderPipeline.builder()
-		.withLocation(Identifier.fromNamespaceAndPath(WaylandCraftCommon.MOD_ID, "pipeline/unpremultiply"))
-		.withVertexShader("core/screenquad")
-		.withFragmentShader(Identifier.fromNamespaceAndPath(WaylandCraftCommon.MOD_ID, "unpremultiply"))
-		.withVertexFormat(DefaultVertexFormat.EMPTY, VertexFormat.Mode.TRIANGLES)
-		.withColorTargetState(ColorTargetState.DEFAULT)
-		.withSampler("Sampler0")
-		.build()
-	);
+        RenderPipeline.builder()
+                .withLocation(Identifier.fromNamespaceAndPath(WaylandCraftCommon.MOD_ID, "pipeline/unpremultiply"))
+                .withVertexShader("core/screenquad")
+                .withFragmentShader(Identifier.fromNamespaceAndPath(WaylandCraftCommon.MOD_ID, "unpremultiply"))
+                .withPrimitiveTopology(PrimitiveTopology.TRIANGLES)
+                .withBindGroupLayout(BindGroupLayouts.SAMPLER0)
+                .withColorTargetState(ColorTargetState.DEFAULT)
+                .build()
+		);
 	
 	public static final RenderPipeline DAMAGE_PIPELINE = RenderPipelines.register(
 		RenderPipeline.builder()
 		.withLocation(Identifier.fromNamespaceAndPath(WaylandCraftCommon.MOD_ID, "pipeline/damage"))
 		.withVertexShader(Identifier.fromNamespaceAndPath(WaylandCraftCommon.MOD_ID, "window"))
 		.withFragmentShader(Identifier.fromNamespaceAndPath(WaylandCraftCommon.MOD_ID, "window_damage"))
-		.withVertexFormat(DefaultVertexFormat.POSITION_TEX, VertexFormat.Mode.QUADS)
-		.withUniform("WindowInfo", UniformType.UNIFORM_BUFFER)
-		.withColorTargetState(new ColorTargetState(new BlendFunction(SourceFactor.ONE, DestFactor.ONE_MINUS_SRC_ALPHA)))
+		.withVertexBinding(0, DefaultVertexFormat.POSITION_TEX)
+                .withPrimitiveTopology(PrimitiveTopology.QUADS)
+		
+		.withBindGroupLayout(WINDOW_INFO_LAYOUT)
+		.withColorTargetState(new ColorTargetState(new BlendFunction(BlendFactor.ONE, BlendFactor.ONE_MINUS_SRC_ALPHA)))
 		.withCull(false)
 		.build()
 	);
 	
-	private static DynamicUniformStorage<WindowInfoUniform> uniformStorage = null;
+	private static GpuBuffer alphaUniformBuffer = null;
+        private static GpuBuffer opaqueUniformBuffer = null;
 	private static boolean debugDamage = false;
 	
 	public final WLCSurface surfaceTree;
@@ -98,15 +109,40 @@ public class WindowFramebuffer implements FramebufferRenderable {
 		this.surfaceTree = surfaceTree;
 	}
 	
-	public static void endFrame() {
-		if(uniformStorage != null) uniformStorage.endFrame();
-	}
+        public static void endFrame() {
+                /* 26.3: persistent uniform buffers, nothing to recycle */
+        }
 	
 	private static void ensureUniformStorage() {
-		if(uniformStorage == null) {
-			uniformStorage = new DynamicUniformStorage<WindowInfoUniform>("window framebuffer", WindowInfoUniform.SIZE, 2);
-		}
-	}
+                if (alphaUniformBuffer == null) {
+                        alphaUniformBuffer = RenderSystem.getDevice().createBuffer(
+                                () -> "waylandcraft window alpha uniforms",
+                                GpuBuffer.USAGE_UNIFORM | GpuBuffer.USAGE_COPY_DST,
+                                WindowInfoUniform.SIZE
+                        );
+
+                        opaqueUniformBuffer = RenderSystem.getDevice().createBuffer(
+                                () -> "waylandcraft window opaque uniforms",
+                                GpuBuffer.USAGE_UNIFORM | GpuBuffer.USAGE_COPY_DST,
+                                WindowInfoUniform.SIZE
+                        );
+                }
+        }
+
+        private static GpuBufferSlice writeWindowInfo(
+                GpuBuffer buffer,
+                WindowInfoUniform uniform
+        ) {
+                ByteBuffer data = ByteBuffer.allocateDirect(WindowInfoUniform.SIZE);
+                uniform.write(data);
+                data.flip();
+
+                var encoder = RenderSystem.getDevice().createCommandEncoder();
+                encoder.writeToBuffer(buffer.slice(), data);
+                encoder.submit();
+
+                return buffer.slice();
+        }
 	
 	private void updateTarget() {
 		int minX = 0;
@@ -142,11 +178,11 @@ public class WindowFramebuffer implements FramebufferRenderable {
 		if(width != prevWidth || height != prevHeight) destroy();
 		
 		if(tempTarget == null) {
-			tempTarget = new TextureTarget(name() + "-temp", width, height, false);
+			tempTarget = new TextureTarget(name() + "-temp", width, height, GpuFormat.RGBA8_UNORM, null);
 		}
 		
 		if(target == null) {
-			target = new TextureTarget(name(), width, height, false);
+			target = new TextureTarget(name(), width, height, GpuFormat.RGBA8_UNORM, null);
 		}
 		
 		if(texture == null) registerTexture();
@@ -171,18 +207,18 @@ public class WindowFramebuffer implements FramebufferRenderable {
 		}
 		
 		ensureUniformStorage();
-		GpuBufferSlice alphaUniforms = uniformStorage.writeUniform(new WindowInfoUniform(poseStack.last().pose(), true));
-		GpuBufferSlice opaqueUniforms = uniformStorage.writeUniform(new WindowInfoUniform(poseStack.last().pose(), false));
+		GpuBufferSlice alphaUniforms = writeWindowInfo(alphaUniformBuffer, new WindowInfoUniform(poseStack.last().pose(), true));
+		GpuBufferSlice opaqueUniforms = writeWindowInfo(opaqueUniformBuffer, new WindowInfoUniform(poseStack.last().pose(), false));
 		
 		try {
-			try(RenderPass pass = RenderSystem.getDevice().createCommandEncoder().createRenderPass(() -> "window framebuffer", tempTarget.getColorTextureView(), OptionalInt.of(0x00000000))) {
-				pass.setPipeline(WINDOW_PIPELINE);
+			try(RenderPass pass = RenderSystem.getDevice().createCommandEncoder().createRenderPass(() -> "window framebuffer", tempTarget.getColorTextureView(), Optional.empty())) {
+				pass.setPipeline(RenderSystem.getCompiledPipeline(WINDOW_PIPELINE));
 				for(CompiledBufferDraw element : elements) {
 					pass.setUniform("WindowInfo", element.alpha ? alphaUniforms : opaqueUniforms);
-					pass.bindTexture("Sampler0", element.textureView, RenderSystem.getSamplerCache().getClampToEdge(FilterMode.NEAREST));
-					pass.setVertexBuffer(0, element.vertexBuffer);
+					pass.setUniform("Sampler0", element.textureView, RenderSystem.getSamplerCache().getClampToEdge(FilterMode.NEAREST));
+					pass.setVertexBuffer(0, element.vertexBuffer.slice());
 					pass.setIndexBuffer(element.indexBuffer, element.indexType);
-					pass.drawIndexed(0, 0, element.indexCount, 1);
+					pass.drawIndexed(0, 0, element.indexCount, 1, 0);
 				}
 			}
 		}
@@ -194,10 +230,10 @@ public class WindowFramebuffer implements FramebufferRenderable {
 		
 		if(debugDamage) drawDebugDamage(opaqueUniforms);
 		
-		try(RenderPass pass = RenderSystem.getDevice().createCommandEncoder().createRenderPass(() -> "window framebuffer unpremultiply", target.getColorTextureView(), OptionalInt.empty())) {
-			pass.setPipeline(UNPREMULTIPLY_PIPELINE);
-			pass.bindTexture("Sampler0", tempTarget.getColorTextureView(), RenderSystem.getSamplerCache().getClampToEdge(FilterMode.NEAREST));
-			pass.draw(0, 3);
+		try(RenderPass pass = RenderSystem.getDevice().createCommandEncoder().createRenderPass(() -> "window framebuffer unpremultiply", target.getColorTextureView(), Optional.empty())) {
+			pass.setPipeline(RenderSystem.getCompiledPipeline(UNPREMULTIPLY_PIPELINE));
+			pass.setUniform("Sampler0", tempTarget.getColorTextureView(), RenderSystem.getSamplerCache().getClampToEdge(FilterMode.NEAREST));
+			pass.draw(0, 3, 0, 1);
 		}
 	}
 	
@@ -213,13 +249,13 @@ public class WindowFramebuffer implements FramebufferRenderable {
 		}
 		
 		try {
-			try(RenderPass pass = RenderSystem.getDevice().createCommandEncoder().createRenderPass(() -> "window framebuffer damage", tempTarget.getColorTextureView(), OptionalInt.empty())) {
-				pass.setPipeline(DAMAGE_PIPELINE);
+			try(RenderPass pass = RenderSystem.getDevice().createCommandEncoder().createRenderPass(() -> "window framebuffer damage", tempTarget.getColorTextureView(), Optional.empty())) {
+				pass.setPipeline(RenderSystem.getCompiledPipeline(DAMAGE_PIPELINE));
 				pass.setUniform("WindowInfo", opaqueUniforms);
 				for(CompiledBufferDraw element : damageElements) {
-					pass.setVertexBuffer(0, element.vertexBuffer);
+					pass.setVertexBuffer(0, element.vertexBuffer.slice());
 					pass.setIndexBuffer(element.indexBuffer, element.indexType);
-					pass.drawIndexed(0, 0, element.indexCount, 1);
+					pass.drawIndexed(0, 0, element.indexCount, 1, 0);
 				}
 			}
 		}
@@ -253,14 +289,14 @@ public class WindowFramebuffer implements FramebufferRenderable {
 		return new BufferDraw(buf.getTextureView(), x, y, w, h, crop_x1, crop_y1, crop_x2, crop_y2, buf.format != BufferTexture.FORMAT_XRGB8888);
 	}
 	
-	private static record CompiledBufferDraw(GpuTextureView textureView, GpuBuffer vertexBuffer, GpuBuffer indexBuffer, int indexCount, VertexFormat.IndexType indexType, boolean alpha) {
+	private static record CompiledBufferDraw(GpuTextureView textureView, GpuBuffer vertexBuffer, GpuBuffer indexBuffer, int indexCount, IndexType indexType, boolean alpha) {
 	}
 	
 	private static record BufferDraw(GpuTextureView textureView, float x, float y, float w, float h, float u1, float v1, float u2, float v2, boolean alpha) {
 		
 		public CompiledBufferDraw compile() {
 			try(ByteBufferBuilder byteBuilder = new ByteBufferBuilder(DefaultVertexFormat.POSITION_TEX.getVertexSize() * 4)) {
-				BufferBuilder builder = new BufferBuilder(byteBuilder, VertexFormat.Mode.QUADS, DefaultVertexFormat.POSITION_TEX);
+				BufferBuilder builder = new BufferBuilder(byteBuilder, PrimitiveTopology.QUADS, DefaultVertexFormat.POSITION_TEX);
 				builder.addVertex(x, y, 0).setUv(u1, v1);
 				builder.addVertex(x + w, y, 0).setUv(u2, v1);
 				builder.addVertex(x + w, y + h, 0).setUv(u2, v2);
@@ -268,7 +304,7 @@ public class WindowFramebuffer implements FramebufferRenderable {
 				
 				try(MeshData mesh = builder.buildOrThrow()) {
 					int indexCount = mesh.drawState().indexCount();
-					RenderSystem.AutoStorageIndexBuffer indices = RenderSystem.getSequentialBuffer(VertexFormat.Mode.QUADS);
+					RenderSystem.AutoStorageIndexBuffer indices = RenderSystem.getSequentialBuffer(PrimitiveTopology.QUADS);
 					GpuBuffer vertexBuffer = RenderSystem.getDevice().createBuffer(null, GpuBuffer.USAGE_VERTEX | GpuBuffer.USAGE_COPY_DST, mesh.vertexBuffer());
 					GpuBuffer indexBuffer = indices.getBuffer(indexCount);
 					return new CompiledBufferDraw(textureView, vertexBuffer, indexBuffer, indexCount, indices.type(), alpha);
@@ -349,11 +385,10 @@ public class WindowFramebuffer implements FramebufferRenderable {
 		
 	}
 	
-	private static record WindowInfoUniform(Matrix4fc mat, boolean alpha) implements DynamicUniform {
+	private static record WindowInfoUniform(Matrix4fc mat, boolean alpha) {
 		
 		public static final int SIZE = new Std140SizeCalculator().putMat4f().putFloat().get();
 		
-		@Override
 		public void write(ByteBuffer byteBuffer) {
 			Std140Builder.intoBuffer(byteBuffer).putMat4f(mat).putFloat(alpha ? 0.0f : 1.0f);
 		}

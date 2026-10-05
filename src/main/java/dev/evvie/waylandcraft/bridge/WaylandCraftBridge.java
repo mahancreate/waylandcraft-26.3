@@ -14,8 +14,6 @@ import org.apache.commons.lang3.ArrayUtils;
 import org.jetbrains.annotations.Nullable;
 import org.lwjgl.system.Platform;
 
-import com.mojang.blaze3d.opengl.GlDevice;
-import com.mojang.blaze3d.systems.GpuDeviceBackend;
 import com.mojang.blaze3d.systems.RenderSystem;
 
 import dev.evvie.waylandcraft.WaylandCraftCommon;
@@ -114,27 +112,33 @@ public class WaylandCraftBridge {
 	private WaylandCraftBridge(long instance) {
 		this.instance = instance;
 	}
-	
-	public static WaylandCraftBridge start() {
-		DmabufFeedbackData dmabufFeedbackData = initBackend();
-		
-		long handle = init(dmabufFeedbackData);
-		WaylandCraftBridge bridge = new WaylandCraftBridge(handle);
-		
-		// Add shutdown thread to clean up resources on normal exit
-		Runtime.getRuntime().addShutdownHook(new Thread(bridge::shutdownHook));
-		
-		return bridge;
-	}
+
+        public static WaylandCraftBridge start() {
+                DmabufFeedbackData feedback = initBackend();
+                long instance = init(feedback);
+
+                if (instance == 0) {
+                        throw new RuntimeException(
+                                "Failed to initialize WaylandCraft native backend"
+                        );
+                }
+
+                WaylandCraftBridge bridge =
+                        new WaylandCraftBridge(instance);
+
+                Runtime.getRuntime().addShutdownHook(
+                        new Thread(
+                                bridge::shutdownHook,
+                                "WaylandCraft shutdown"
+                        )
+                );
+
+                return bridge;
+        }
+
 	
 	private static DmabufFeedbackData initBackend() {
-		GpuDeviceBackend deviceBackend = RenderSystem.getDevice().backend;
-		if(deviceBackend instanceof GlDevice) {
-			return initBackendEGL();
-		}
-		
-		WaylandCraftCommon.LOGGER.error("Unsupported graphics backend!");
-		return null;
+        	return initBackendEGL();
 	}
 	
 	private static DmabufFeedbackData initBackendEGL() {

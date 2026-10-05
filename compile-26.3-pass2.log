@@ -1,0 +1,43 @@
+
+> Configure project :
+Fabric Loom: 1.17.21
+WARNING: Native library not built! The built mod will not contain native code
+
+> Task :clean
+
+> Task :compileJava FAILED
+/home/mahan/waylandcraft/src/main/java/dev/evvie/waylandcraft/render/BufferTexture.java:57: error: statements not expected outside of methods and initializers
+		throw new RuntimeException("Unsupported backed");
+		^
+/home/mahan/waylandcraft/src/main/java/dev/evvie/waylandcraft/render/BufferTexture.java:271: error: class, interface, enum, or record expected
+}
+^
+/home/mahan/waylandcraft/src/main/java/dev/evvie/waylandcraft/render/BufferTexture.java:1: error: compact source file should not have package declaration
+package dev.evvie.waylandcraft.render;
+^
+3 errors
+
+[Incubating] Problems report is available at: file:///home/mahan/waylandcraft/build/reports/problems/problems-report.html
+
+FAILURE: Build failed with an exception.
+
+* What went wrong:
+Execution failed for task ':compileJava' (registered by plugin class 'org.gradle.api.plugins.JavaBasePlugin').
+> Compilation failed; see the compiler output below.
+  /home/mahan/waylandcraft/src/main/java/dev/evvie/waylandcraft/render/BufferTexture.java:1: error: compact source file should not have package declaration
+  package dev.evvie.waylandcraft.render;
+  ^
+  /home/mahan/waylandcraft/src/main/java/dev/evvie/waylandcraft/render/BufferTexture.java:271: error: class, interface, enum, or record expected
+  }
+  ^
+  /home/mahan/waylandcraft/src/main/java/dev/evvie/waylandcraft/render/BufferTexture.java:57: error: statements not expected outside of methods and initializers
+  		throw new RuntimeException("Unsupported backed");
+  		^
+  3 errors
+
+* Try:
+> Check your code and dependencies to fix the compilation error(s)
+> Run with --scan to get full insights from a Build Scan (powered by Develocity).
+
+BUILD FAILED in 2s
+2 actionable tasks: 2 executed
